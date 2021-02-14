@@ -8,6 +8,19 @@ use crate::compiler::lexar::*;
 //ㄴ True
 
 pub fn cli(str: Vec<String>) {
+    if str.len() == 1 {
+        println!("Commands List:");
+        println!("\tboba init - Make Config File");
+        println!("\tex)\t>boba init");
+        println!("\tboba build [filename].boba [filename].html - Build boba");
+        println!("\tex)\t>boba build ./test.boba ./test.html");
+        println!("\tboba run [filename].boba - Show Build Result");
+        println!("\tex)\t>boba run ./test.boba");
+        println!("\tboba help | [Somethings] - Show Commands List");
+        println!("\tex)\t>boba help");
+        return;
+    }
+    
     match str[1].as_str() {
         "init" => {
             let mut file = File::create(".boba.json").expect("파일 생성에 문제 있음");
