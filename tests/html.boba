@@ -1,0 +1,9 @@
+html.lang="en-US",asda="asd"
+    head
+        meta.charset="2"
+        title "My test page" /title
+    /head
+    body
+        p "This is mypage" /p
+    /body
+/html
