@@ -1,4 +1,4 @@
-use super::token::{self, Token};
+use super::token::Token;
 pub struct Lexar;
 
 /**
@@ -48,7 +48,7 @@ pub fn parse(tokens: Vec<Token>) -> String {
         if i.keyword == "TAG" {
             html.push_str( &("<".to_string() + &i.value.to_string()));
 
-            if tokens.len() > n+1 {
+            if tokens.len()-1 >= n+1 {
                 if tokens[n+1].keyword == "DATA" {
                     let mut a = String::new();
                     for i in tokens[n+1].value.split(",") {
@@ -64,5 +64,6 @@ pub fn parse(tokens: Vec<Token>) -> String {
             html.push_str(&i.value);
         }
     }
+    html.push_str(">");
     return html;
 }

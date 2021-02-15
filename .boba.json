@@ -1,4 +1,4 @@
 {
-    "outDir": "./dist",
-    "inDir": "./test"
+    "outDir": "./tests/",
+    "inDir": "./tests/"
 }

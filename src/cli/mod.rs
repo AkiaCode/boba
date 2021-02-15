@@ -1,11 +1,7 @@
 use std::{fs::File, io::{Read, Write}};
 
+use crate::config::config;
 use crate::compiler::lexar::*;
-
-//boba init [create config]
-//boba build (*.boba)
-//boba chleeisbaka
-//ㄴ True
 
 pub fn cli(str: Vec<String>) {
     if str.len() == 1 {
@@ -16,6 +12,8 @@ pub fn cli(str: Vec<String>) {
         println!("\tex)\t>boba build ./test.boba ./test.html");
         println!("\tboba run [filename].boba - Show Build Result");
         println!("\tex)\t>boba run ./test.boba");
+        println!("\tboba config [key] - Show Config");
+        println!("\tex)\t>boba config");
         println!("\tboba help | [Somethings] - Show Commands List");
         println!("\tex)\t>boba help");
         return;
@@ -33,21 +31,31 @@ r#"{
         },
         "build" => {
             //cargo run build ./html.boba ./html.html            
-            let mut file = File::open(str[2].to_string()).expect("메세지 부분에 오류 남");
+            let mut file = File::open(config("inDir") + &str[2].to_string()).expect("메세지 부분에 오류 남");
             let mut boba = String::new();
             let _ = file.read_to_string(&mut boba);
-            let mut file = File::create(str[3].clone()).expect("파일 생성에 문제 있음");
+            let mut file = File::create(config("outDir") + &str[3]).expect("파일 생성에 문제 있음");
             let _ = file.write_all(Lexar::new(boba).as_bytes());
             println!("Done.")
         },
         "run" => {
             //cargo run run ./html.boba
-            let mut file = File::open(str[2].to_string()).expect("메세지 부분에 오류 남");
+            let mut file = File::open( config("inDir") + &str[2].to_string()).expect("메세지 부분에 오류 남");
             let mut boba = String::new();
             let _ = file.read_to_string(&mut boba);
             println!("{}", Lexar::new(boba));
         },
+        "config" => {
+            if str.len() == 3 {
+                println!("{}", config(&str[2]));
+            } else {
+                println!("Configs:\ninDir: {}\noutDir: {}", config("inDir"), config("outDir"))
+            }
+        }
         "help" | _ => {
+            if str[1] != "help" {
+                eprintln!("Error: Command Not Found\n");
+            }
             println!("Commands List:");
             println!("\tboba init - Make Config File");
             println!("\tex)\t>boba init");
@@ -55,6 +63,8 @@ r#"{
             println!("\tex)\t>boba build ./test.boba ./test.html");
             println!("\tboba run [filename].boba - Show Build Result");
             println!("\tex)\t>boba run ./test.boba");
+            println!("\tboba config [key] - Show Config");
+            println!("\tex)\t>boba config");
             println!("\tboba help | [Somethings] - Show Commands List");
             println!("\tex)\t>boba help");
         },
