@@ -32,7 +32,7 @@ r#"{
             println!("Config done.")
         },
         "build" => {
-            //cargo run build ./html.boba ./html.html
+            //cargo run build ./html.boba ./html.html            
             let mut file = File::open(str[2].to_string()).expect("메세지 부분에 오류 남");
             let mut boba = String::new();
             let _ = file.read_to_string(&mut boba);

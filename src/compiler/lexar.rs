@@ -1,4 +1,4 @@
-use super::token::Token;
+use super::token::{self, Token};
 pub struct Lexar;
 
 /**
@@ -43,10 +43,23 @@ impl Lexar {
 pub fn parse(tokens: Vec<Token>) -> String {
     let mut html = String::new();
     html.push_str("<!DOCTYPE html>");
-    for (_n, i) in tokens.iter().enumerate() {
+    for (n, i) in tokens.iter().enumerate() {
         if i.value.is_empty() { continue; }
         if i.keyword == "TAG" {
-            html.push_str( &("<".to_string() + &i.value.to_string() + ">"));
+            html.push_str( &("<".to_string() + &i.value.to_string()));
+
+            if tokens.len() > n+1 {
+                if tokens[n+1].keyword == "DATA" {
+                    let mut a = String::new();
+                    for i in tokens[n+1].value.split(",") {
+                        a.push_str(&(i.to_owned() + " "));
+                    }
+                    a.remove(a.len()-1);
+                    html.push_str(&(" ".to_string() + &a.to_owned() + ">"));
+                } else {
+                    html.push_str(">");
+                }
+            }
         } else if i.keyword == "MSG" {
             html.push_str(&i.value);
         }
