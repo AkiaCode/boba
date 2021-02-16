@@ -1,5 +1,5 @@
 # boba
-Template for simple use of DOM
+Template for simple use of HTML
 
 ## Example
 Command:
