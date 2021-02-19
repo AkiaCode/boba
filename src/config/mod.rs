@@ -8,5 +8,5 @@ pub fn config(key: &str) -> String {
     if result[key].is_empty() {
         eprintln!("Error: Config Not Found");
     }
-    return result[key].to_string()
+    return result[key].to_string();
 }
